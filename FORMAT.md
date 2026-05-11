@@ -40,10 +40,17 @@ colors:
   <token-name>: <Color>
 
 typography:
-  font-family: <string>    # required — primary typeface name
-  variable: <boolean>      # required — true if variable font (affects character styles)
+  fonts:
+    <font-name>:           # e.g. primary, secondary, mono
+      family: <string>     # required — typeface name
+      variable: <boolean>  # required — true if variable font
   paragraph:
-    <scale-name>: <TypographyParagraph>
+    <scale-name>:
+      font: <font-name>    # required — references a key under typography.fonts
+      size: <Dimension>
+      weight: <number>
+      line-height: <number>
+      paragraph-spacing: <Dimension>
   character:
     <style-name>: <TypographyCharacter>
 
@@ -81,9 +88,17 @@ templates:
 | Reference | `{path.to.token}` | `{colors.accent}` |
 | SlotType | `text`, `visual`, `list`, `any` | `"text"` |
 
+### TypographyFont Object
+
+```yaml
+family: <string>           # typeface name — must be available in the authoring tool
+variable: <boolean>        # true if variable font; determines inline character style support
+```
+
 ### TypographyParagraph Object
 
 ```yaml
+font: <font-name>          # key from typography.fonts — e.g. "primary", "secondary"
 size: <Dimension>          # in pt
 weight: <number>           # 100–900
 line-height: <number>      # unitless ratio, e.g. 1.5
@@ -95,9 +110,10 @@ paragraph-spacing: <Dimension>  # space after paragraph break, in pt
 ```yaml
 weight: <number>           # optional — overrides paragraph weight
 style: <string>            # optional — "italic", "normal"
-requires-variable-font: <boolean>
 note: <string>             # optional — implementation guidance
 ```
+
+> Character styles apply inline within a paragraph. Whether they work without breaking the token link depends on the `variable` flag of the font used by that paragraph style.
 
 ---
 
@@ -251,25 +267,34 @@ colors:
   border: "#E0E0E0"
 
 typography:
-  font-family: "Inter"
-  variable: true
+  fonts:
+    primary:
+      family: "Playfair Display"
+      variable: false
+    secondary:
+      family: "Inter"
+      variable: true
   paragraph:
     display:
+      font: primary
       size: "44pt"
       weight: 700
       line-height: 1.1
       paragraph-spacing: "0pt"
     heading:
+      font: primary
       size: "28pt"
       weight: 600
       line-height: 1.2
       paragraph-spacing: "12pt"
     body:
+      font: secondary
       size: "16pt"
       weight: 400
       line-height: 1.5
       paragraph-spacing: "8pt"
     caption:
+      font: secondary
       size: "11pt"
       weight: 400
       line-height: 1.4
@@ -277,10 +302,10 @@ typography:
   character:
     bold:
       weight: 700
-      requires-variable-font: true
+      note: "inline only — requires variable font; static font needs a separate text frame"
     italic:
       style: "italic"
-      requires-variable-font: true
+      note: "inline only — requires variable font"
 
 spacing:
   base: "8pt"

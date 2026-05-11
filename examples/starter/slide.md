@@ -17,25 +17,31 @@ colors:
   border: "#E0E0E0"
 
 typography:
-  font-family: "Inter"
-  variable: true
+  fonts:
+    primary:
+      family: "Inter"
+      variable: true
   paragraph:
     display:
+      font: primary
       size: "44pt"
       weight: 700
       line-height: 1.1
       paragraph-spacing: "0pt"
     heading:
+      font: primary
       size: "28pt"
       weight: 600
       line-height: 1.2
       paragraph-spacing: "12pt"
     body:
+      font: primary
       size: "16pt"
       weight: 400
       line-height: 1.5
       paragraph-spacing: "8pt"
     caption:
+      font: primary
       size: "11pt"
       weight: 400
       line-height: 1.4
@@ -43,10 +49,10 @@ typography:
   character:
     bold:
       weight: 700
-      requires-variable-font: true
+      note: "inline only — requires variable font"
     italic:
       style: "italic"
-      requires-variable-font: true
+      note: "inline only — requires variable font"
 
 spacing:
   base: "8pt"
